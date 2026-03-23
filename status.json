@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-23T13:49:07Z",
+  "updatedAt": "2026-03-23T13:49:41Z",
   "connection": "ok",
   "headline": "なお待ち 3件あり",
   "summary": {
@@ -10,6 +10,18 @@
     "error": 0
   },
   "items": [
+    {
+      "id": "agent:main:subagent:0d0e83c3-6935-4f5a-b2ad-58f74d7ce0e5",
+      "kind": "subagent",
+      "label": "サブエージェント",
+      "state": "running",
+      "needsNao": false,
+      "ageMin": 0,
+      "owner": "Ucho",
+      "detail": "model: claude-opus-4-6 / 4% used",
+      "source": "openclaw",
+      "children": 0
+    },
     {
       "id": "agent:main:slack:direct:u07tsf6738r:thread:1774264764.191079",
       "kind": "request",
@@ -23,24 +35,12 @@
       "children": 0
     },
     {
-      "id": "agent:main:subagent:0d0e83c3-6935-4f5a-b2ad-58f74d7ce0e5",
-      "kind": "subagent",
-      "label": "サブエージェント",
-      "state": "running",
-      "needsNao": false,
-      "ageMin": 1,
-      "owner": "Ucho",
-      "detail": "model: claude-opus-4-6 / 4% used",
-      "source": "openclaw",
-      "children": 0
-    },
-    {
       "id": "agent:main:slack:direct:u07tsf6738r:thread:1774255585.236799",
       "kind": "request",
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 4,
+      "ageMin": 5,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 31% used",
       "source": "openclaw",
@@ -52,7 +52,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 5,
+      "ageMin": 6,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 3% used",
       "source": "openclaw",
@@ -76,7 +76,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 7,
+      "ageMin": 8,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 14% used",
       "source": "openclaw",
