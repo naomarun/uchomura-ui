@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>うちょ村UI</title>
+    <meta
+      name="description"
+      content="OpenClaw の request / subagent 状態を、常時ひと目で確認するための軽量ステータス表示 UI。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a" aria-hidden="true"></div>
+    <div class="bg-orb orb-b" aria-hidden="true"></div>
+
+    <main class="app">
+      <header class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow">Always-visible OpenClaw status surface</p>
+          <h1>うちょ村UI</h1>
+          <p class="hero-text">
+            1キャラ = 1リクエスト or 1サブエージェント。なお待ちを最優先で、遠目でも判断できる表示にする。
+          </p>
+        </div>
+
+        <div class="hero-meta">
+          <span id="sourceBadge" class="pill neutral">読込中</span>
+          <span id="connectionBadge" class="pill ok">接続OK</span>
+          <span id="updatedAt" class="timestamp">--</span>
+        </div>
+      </header>
+
+      <section id="priorityBanner" class="priority-banner calm shell" aria-live="polite">
+        <div class="priority-copy">
+          <p class="banner-label">最優先シグナル</p>
+          <h2 id="priorityText">なお待ちを確認中</h2>
+          <p id="prioritySubtext" class="banner-subtext">状態データを読み込みます。</p>
+        </div>
+        <div class="priority-side">
+          <div id="priorityCount" class="priority-count">0</div>
+          <span id="staleBadge" class="inline-note hidden">更新が古い可能性</span>
+        </div>
+      </section>
+
+      <section class="status-strip shell">
+        <div class="strip-item">
+          <span class="strip-label">表示ソース</span>
+          <strong id="sourceText">status.json</strong>
+        </div>
+        <div class="strip-item">
+          <span class="strip-label">接続状態</span>
+          <strong id="connectionText">確認中</strong>
+        </div>
+        <div class="strip-item">
+          <span class="strip-label">観測メモ</span>
+          <strong id="headlineText">読み込み中</strong>
+        </div>
+      </section>
+
+      <section class="summary-grid" id="summaryGrid" aria-label="状態サマリー"></section>
+
+      <section class="board-grid">
+        <section class="village shell">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">State Lanes</p>
+              <h2>村のようす</h2>
+            </div>
+            <p>優先順: なお待ち → エラー → 実行中 → 新着 → 完了</p>
+          </div>
+          <div class="lanes" id="lanes"></div>
+        </section>
+
+        <aside class="sidebar">
+          <section class="shell info-panel detail-panel">
+            <div class="section-head compact">
+              <div>
+                <p class="eyebrow">Selection</p>
+                <h2>キャラ詳細</h2>
+              </div>
+            </div>
+            <div id="detailCard" class="detail-card empty">
+              <p class="detail-empty">キャラをクリックすると詳細がここに表示されます。</p>
+            </div>
+          </section>
+
+          <section class="shell info-panel">
+            <div class="section-head compact">
+              <div>
+                <p class="eyebrow">Recent Events</p>
+                <h2>直近イベント</h2>
+              </div>
+            </div>
+            <ul id="eventsList" class="events-list"></ul>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <template id="cardTemplate">
+      <article class="summary-card">
+        <div class="card-topline">
+          <p class="card-label"></p>
+          <span class="card-icon"></span>
+        </div>
+        <div class="card-value-row">
+          <strong class="card-value"></strong>
+          <span class="card-note"></span>
+        </div>
+      </article>
+    </template>
+
+    <template id="laneTemplate">
+      <section class="lane">
+        <div class="lane-head">
+          <div>
+            <h3></h3>
+            <p class="lane-description"></p>
+          </div>
+          <span class="lane-count"></span>
+        </div>
+        <div class="characters"></div>
+      </section>
+    </template>
+
+    <template id="characterTemplate">
+      <article class="character" tabindex="0">
+        <div class="face-wrap">
+          <div class="face"></div>
+          <span class="state-dot"></span>
+        </div>
+        <div class="char-meta">
+          <div class="char-topline">
+            <span class="char-kind"></span>
+            <span class="char-age"></span>
+          </div>
+          <strong class="char-label"></strong>
+          <p class="char-secondary"></p>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

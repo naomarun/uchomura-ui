@@ -1,0 +1,180 @@
+{
+  "updatedAt": "2026-03-23T20:43:00+09:00",
+  "connection": "ok",
+  "headline": "なお待ち 2件、実行中 3件",
+  "summary": {
+    "new": 2,
+    "running": 3,
+    "waitingApproval": 2,
+    "done": 6,
+    "error": 1
+  },
+  "items": [
+    {
+      "id": "req_101",
+      "kind": "request",
+      "label": "価格判断",
+      "state": "waiting_approval",
+      "needsNao": true,
+      "ageMin": 12,
+      "owner": "Nao",
+      "detail": "返信前の最終判断が必要",
+      "source": "slack",
+      "children": 0
+    },
+    {
+      "id": "req_102",
+      "kind": "request",
+      "label": "公開判断",
+      "state": "waiting_approval",
+      "needsNao": true,
+      "ageMin": 4,
+      "owner": "Nao",
+      "detail": "main Mac から即確認したい案件",
+      "source": "manual",
+      "children": 1
+    },
+    {
+      "id": "sub_201",
+      "kind": "subagent",
+      "label": "実装隊",
+      "state": "running",
+      "needsNao": false,
+      "ageMin": 17,
+      "owner": "Ucho",
+      "detail": "UI polish と README 更新",
+      "source": "openclaw",
+      "children": 0
+    },
+    {
+      "id": "sub_202",
+      "kind": "subagent",
+      "label": "調査隊",
+      "state": "running",
+      "needsNao": false,
+      "ageMin": 9,
+      "owner": "Ucho",
+      "detail": "配信方法を確認中",
+      "source": "openclaw",
+      "children": 0
+    },
+    {
+      "id": "req_103",
+      "kind": "request",
+      "label": "返信文案",
+      "state": "running",
+      "needsNao": false,
+      "ageMin": 6,
+      "owner": "Ucho",
+      "detail": "草案の仕上げ",
+      "source": "slack",
+      "children": 0
+    },
+    {
+      "id": "req_104",
+      "kind": "request",
+      "label": "LP確認",
+      "state": "new",
+      "needsNao": false,
+      "ageMin": 2,
+      "owner": "Queue",
+      "detail": "受信直後の新着依頼",
+      "source": "slack",
+      "children": 0
+    },
+    {
+      "id": "sub_203",
+      "kind": "subagent",
+      "label": "検証係",
+      "state": "new",
+      "needsNao": false,
+      "ageMin": 1,
+      "owner": "Queue",
+      "detail": "起動待ち",
+      "source": "openclaw",
+      "children": 0
+    },
+    {
+      "id": "req_105",
+      "kind": "request",
+      "label": "デプロイ失敗",
+      "state": "error",
+      "needsNao": false,
+      "ageMin": 8,
+      "owner": "Ucho",
+      "detail": "静的配信先の設定見直しが必要",
+      "source": "deploy",
+      "children": 0
+    },
+    {
+      "id": "req_106",
+      "kind": "request",
+      "label": "朝ブリーフ",
+      "state": "done",
+      "needsNao": false,
+      "ageMin": 35,
+      "owner": "Ucho",
+      "detail": "共有済み",
+      "source": "slack",
+      "children": 0
+    },
+    {
+      "id": "sub_204",
+      "kind": "subagent",
+      "label": "集計係",
+      "state": "done",
+      "needsNao": false,
+      "ageMin": 23,
+      "owner": "Ucho",
+      "detail": "件数集計を完了",
+      "source": "openclaw",
+      "children": 0
+    },
+    {
+      "id": "sub_205",
+      "kind": "subagent",
+      "label": "整形係",
+      "state": "done",
+      "needsNao": false,
+      "ageMin": 21,
+      "owner": "Ucho",
+      "detail": "イベント整形を完了",
+      "source": "openclaw",
+      "children": 0
+    },
+    {
+      "id": "req_107",
+      "kind": "request",
+      "label": "PR確認",
+      "state": "done",
+      "needsNao": false,
+      "ageMin": 18,
+      "owner": "Nao",
+      "detail": "確認完了",
+      "source": "github",
+      "children": 2
+    }
+  ],
+  "events": [
+    {
+      "at": "20:43",
+      "level": "waiting_approval",
+      "text": "公開判断が なお待ち に移動"
+    },
+    {
+      "at": "20:41",
+      "level": "running",
+      "text": "実装隊が README 更新を開始"
+    },
+    {
+      "at": "20:39",
+      "level": "error",
+      "text": "デプロイ先の設定差異を検知"
+    },
+    {
+      "at": "20:37",
+      "level": "done",
+      "text": "PR確認が完了"
+    }
+  ]
+}
