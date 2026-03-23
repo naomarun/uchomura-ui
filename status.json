@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-23T13:48:32Z",
+  "updatedAt": "2026-03-23T13:49:07Z",
   "connection": "ok",
   "headline": "なお待ち 3件あり",
   "summary": {
@@ -16,7 +16,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 0,
+      "ageMin": 1,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 16% used",
       "source": "openclaw",
@@ -28,7 +28,7 @@
       "label": "サブエージェント",
       "state": "running",
       "needsNao": false,
-      "ageMin": 0,
+      "ageMin": 1,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 4% used",
       "source": "openclaw",
@@ -64,7 +64,7 @@
       "label": "main",
       "state": "running",
       "needsNao": false,
-      "ageMin": 5,
+      "ageMin": 6,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 3% used",
       "source": "openclaw",
@@ -88,7 +88,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 9,
+      "ageMin": 10,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 3% used",
       "source": "openclaw",
@@ -100,7 +100,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 13,
+      "ageMin": 14,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 6% used",
       "source": "openclaw",
@@ -112,7 +112,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 13,
+      "ageMin": 14,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 46% used",
       "source": "openclaw",
@@ -124,7 +124,7 @@
       "label": "Slack session",
       "state": "running",
       "needsNao": false,
-      "ageMin": 15,
+      "ageMin": 16,
       "owner": "Ucho",
       "detail": "model: claude-opus-4-6 / 9% used",
       "source": "openclaw",
@@ -432,17 +432,17 @@
   ],
   "events": [
     {
-      "at": "22:48",
+      "at": "22:49",
       "level": "running",
       "text": "ステータス更新 — セッション 10件取得"
     },
     {
-      "at": "22:48",
+      "at": "22:49",
       "level": "waiting_approval",
       "text": "なお待ち 3件"
     },
     {
-      "at": "22:48",
+      "at": "22:49",
       "level": "running",
       "text": "進行中 15件"
     }
