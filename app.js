@@ -364,8 +364,9 @@ function renderHeader(data) {
   const stale = ageFromTimestamp(data.updatedAt);
 
   dom.updatedAt.textContent = `${formatUpdatedAt(data.updatedAt)} 更新`;
-  dom.sourceBadge.textContent = data.source === "remote" ? "status.json" : "埋め込みモック";
-  dom.sourceBadge.className = `pill ${data.source === "remote" ? "neutral" : "warn"}`;
+  const isLive = data.source === "remote" && !stale.stale;
+  dom.sourceBadge.textContent = data.source === "remote" ? (isLive ? "Live" : "Stale") : "Fallback";
+  dom.sourceBadge.className = `pill ${isLive ? "ok" : "warn"}`;
   dom.sourceText.textContent = data.source === "remote" ? STATUS_URL : "embedded fallback";
 
   const connectionView = getConnectionView(data.connection, data.source, stale.stale);
@@ -605,138 +606,6 @@ async function loadStatus() {
   }
 }
 
-// --- Demo mode: rotate mock states every 8 seconds to show "life" ---
-const DEMO_MODE = true; // Set false when real exporter is connected
-const DEMO_INTERVAL_MS = 8000;
-
-const demoScenarios = [
-  // Scenario 0: Normal with 1 waiting
-  (base) => base,
-  // Scenario 1: 2 waiting, new subagent spawned
-  (base) => {
-    const items = [...base.items];
-    items.push({
-      id: "req_110",
-      kind: "request",
-      label: "採用面接日程",
-      state: "waiting_approval",
-      needsNao: true,
-      ageMin: 1,
-      owner: "Nao",
-      detail: "候補日の最終確定が必要",
-      source: "slack",
-      children: 0
-    });
-    items.push({
-      id: "sub_210",
-      kind: "subagent",
-      label: "リサーチ隊",
-      state: "running",
-      needsNao: false,
-      ageMin: 0,
-      owner: "Ucho",
-      detail: "競合調査を開始",
-      source: "openclaw",
-      children: 0
-    });
-    return {
-      ...base,
-      updatedAt: new Date().toISOString(),
-      headline: "なお待ち増加中 — 2件の判断が必要",
-      summary: { new: 2, running: 4, waitingApproval: 3, done: 6, error: 1 },
-      items,
-      events: [
-        { at: fmtNow(), level: "waiting_approval", text: "採用面接日程が なお待ちに追加" },
-        { at: fmtNow(-1), level: "running", text: "リサーチ隊が起動" },
-        ...base.events.slice(0, 2)
-      ]
-    };
-  },
-  // Scenario 2: Error resolved, things calming down
-  (base) => {
-    const items = base.items
-      .filter((i) => i.state !== "error")
-      .map((i) => i.state === "waiting_approval" && i.id === "req_101"
-        ? { ...i, state: "done", needsNao: false, ageMin: i.ageMin + 5 }
-        : i
-      );
-    return {
-      ...base,
-      updatedAt: new Date().toISOString(),
-      headline: "落ち着いてきた — エラー解消済み",
-      summary: { new: 2, running: 3, waitingApproval: 1, done: 7, error: 0 },
-      items,
-      events: [
-        { at: fmtNow(), level: "done", text: "価格判断が完了（なお承認済み）" },
-        { at: fmtNow(-1), level: "done", text: "デプロイ失敗が解消" },
-        ...base.events.slice(0, 2)
-      ]
-    };
-  },
-  // Scenario 3: All clear
-  (base) => {
-    const items = base.items.map((i) =>
-      i.state === "waiting_approval" || i.state === "new"
-        ? { ...i, state: "done", needsNao: false, ageMin: i.ageMin + 10 }
-        : i.state === "running"
-          ? { ...i, state: "done", needsNao: false, ageMin: i.ageMin + 8 }
-          : i
-    );
-    return {
-      ...base,
-      updatedAt: new Date().toISOString(),
-      headline: "全て完了 — 穏やかです",
-      summary: { new: 0, running: 0, waitingApproval: 0, done: items.length, error: 0 },
-      items,
-      events: [
-        { at: fmtNow(), level: "done", text: "全タスク完了" },
-        ...base.events.slice(0, 3)
-      ]
-    };
-  },
-  // Scenario 4: New burst
-  (base) => {
-    const items = [
-      ...base.items.slice(0, 6),
-      { id: "req_120", kind: "request", label: "SEO記事レビュー", state: "new", needsNao: false, ageMin: 0, owner: "Queue", detail: "新着依頼", source: "slack", children: 0 },
-      { id: "req_121", kind: "request", label: "KPI集計依頼", state: "new", needsNao: false, ageMin: 0, owner: "Queue", detail: "新着依頼", source: "slack", children: 0 },
-      { id: "sub_220", kind: "subagent", label: "速報チーム", state: "running", needsNao: false, ageMin: 1, owner: "Ucho", detail: "急ぎの調査", source: "openclaw", children: 0 }
-    ];
-    return {
-      ...base,
-      updatedAt: new Date().toISOString(),
-      headline: "依頼が増えている — 新着3件",
-      summary: { new: 4, running: 4, waitingApproval: 2, done: 6, error: 1 },
-      items,
-      events: [
-        { at: fmtNow(), level: "new", text: "SEO記事レビュー・KPI集計が着信" },
-        { at: fmtNow(-1), level: "running", text: "速報チームが起動" },
-        ...base.events.slice(0, 2)
-      ]
-    };
-  }
-];
-
-function fmtNow(offsetMin) {
-  const d = new Date();
-  if (offsetMin) d.setMinutes(d.getMinutes() + offsetMin);
-  return d.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" });
-}
-
-let demoIndex = 0;
-
-function loadStatusOrDemo() {
-  if (DEMO_MODE) {
-    const baseData = normalizeData(fallbackStatus, "demo");
-    const scenario = demoScenarios[demoIndex % demoScenarios.length];
-    const transformed = scenario(baseData);
-    // Re-normalize to ensure consistency
-    render(normalizeData(transformed, "demo"));
-    demoIndex++;
-    return;
-  }
-  loadStatus();
-}
-
-loadStatusOrDemo();
-window.setInterval(loadStatusOrDemo, DEMO_MODE ? DEMO_INTERVAL_MS : POLL_INTERVAL_MS);
+// --- Live mode: fetch status.json every 15 seconds ---
+loadStatus();
+window.setInterval(loadStatus, POLL_INTERVAL_MS);
